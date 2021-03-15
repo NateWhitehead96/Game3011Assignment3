@@ -15,6 +15,9 @@ public class BoardManager : MonoBehaviour
 
     public bool isShifting { get; set; }
 
+    public int turnsLeft;
+    public int score;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +78,13 @@ public class BoardManager : MonoBehaviour
                     
                     break;
                 }
+            }
+        }
+        for (int x = 0; x < xSize; x++)
+        {
+            for (int y = 0; y < ySize; y++)
+            {
+                grid[x, y].GetComponent<Tile>().ClearAllMatches();
             }
         }
     }

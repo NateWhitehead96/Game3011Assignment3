@@ -72,7 +72,7 @@ public class Tile : MonoBehaviour {
 		{
 			return;
 		}
-
+		BoardManager.Instance.turnsLeft--;
 		Sprite tempSprite = renderSwap.sprite;
 		renderSwap.sprite = render.sprite;
 		render.sprite = tempSprite;
@@ -123,8 +123,13 @@ public class Tile : MonoBehaviour {
 		{
 			for (int i = 0; i < matchingTiles.Count; i++)
 			{
+				//if(matchingTiles[i].GetComponent<SpriteRenderer>().sprite.name == "SwordSprite")
+    //            {
+				//	return;
+    //            }
 				matchingTiles[i].GetComponent<SpriteRenderer>().sprite = null;
 			}
+			BoardManager.Instance.score += (10 * matchingTiles.Count) + 10;
 			matchFound = true;
 		}
 	}
@@ -142,6 +147,7 @@ public class Tile : MonoBehaviour {
 			matchFound = false;
 			StopCoroutine(BoardManager.Instance.FindEmptyTiles());
 			StartCoroutine(BoardManager.Instance.FindEmptyTiles());
+			
 			//BoardManager.Instance.StartCoroutines();
 		}
 	}
