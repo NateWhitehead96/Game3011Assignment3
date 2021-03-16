@@ -18,11 +18,13 @@ public class BoardManager : MonoBehaviour
     public int turnsLeft;
     public int score;
 
+    public static int difficulty = 1; // Difficulty will determine # of block sprites. 1 meaning none. 2 meaning some will spawn after you starts clearing. 3 meaning some start and spawn during play
+
     // Start is called before the first frame update
     void Start()
     {
         Instance = GetComponent<BoardManager>();
-
+        turnsLeft = 15 * difficulty; // give player more turns based on difficulty
         Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
         CreateBoard(offset.x, offset.y);
     }
@@ -50,10 +52,21 @@ public class BoardManager : MonoBehaviour
                 possibleItems.Remove(previousLeft[y]);
                 possibleItems.Remove(previousBelow);
 
-                Sprite newSprite = possibleItems[Random.Range(0, possibleItems.Count)];
-                newTile.GetComponent<SpriteRenderer>().sprite = newSprite;
-                previousLeft[y] = newSprite;
-                previousBelow = newSprite;
+                if(difficulty < 3)
+                {
+                    Sprite newSprite = possibleItems[Random.Range(0, possibleItems.Count - 1)];
+                    newTile.GetComponent<SpriteRenderer>().sprite = newSprite;
+                    previousLeft[y] = newSprite;
+                    previousBelow = newSprite;
+                }
+                else
+                {
+                    Sprite newSprite = possibleItems[Random.Range(0, possibleItems.Count)];
+                    newTile.GetComponent<SpriteRenderer>().sprite = newSprite;
+                    previousLeft[y] = newSprite;
+                    previousBelow = newSprite;
+                }
+                
             }
         }
     }
@@ -137,8 +150,12 @@ public class BoardManager : MonoBehaviour
         {
             possibleItems.Remove(grid[x, y - 1].GetComponent<SpriteRenderer>().sprite);
         }
-
-        return possibleItems[Random.Range(0, possibleItems.Count)];
+        if(difficulty > 1) // if we're not in easy allow block sprites to spawn
+        {
+            return possibleItems[Random.Range(0, possibleItems.Count)];
+        }
+        else // dont spawn blocks
+            return possibleItems[Random.Range(0, possibleItems.Count - 1)];
     }
 
     // Update is called once per frame

@@ -123,11 +123,11 @@ public class Tile : MonoBehaviour {
 		{
 			for (int i = 0; i < matchingTiles.Count; i++)
 			{
-				//if(matchingTiles[i].GetComponent<SpriteRenderer>().sprite.name == "SwordSprite")
-    //            {
-				//	return;
-    //            }
-				matchingTiles[i].GetComponent<SpriteRenderer>().sprite = null;
+                if (matchingTiles[i].GetComponent<SpriteRenderer>().sprite.name == "BlockSprite")
+                {
+                    return;
+                }
+                matchingTiles[i].GetComponent<SpriteRenderer>().sprite = null;
 			}
 			BoardManager.Instance.score += (10 * matchingTiles.Count) + 10;
 			matchFound = true;
@@ -147,7 +147,7 @@ public class Tile : MonoBehaviour {
 			matchFound = false;
 			StopCoroutine(BoardManager.Instance.FindEmptyTiles());
 			StartCoroutine(BoardManager.Instance.FindEmptyTiles());
-			
+			SoundManager.Instance.sound.Play();
 			//BoardManager.Instance.StartCoroutines();
 		}
 	}
