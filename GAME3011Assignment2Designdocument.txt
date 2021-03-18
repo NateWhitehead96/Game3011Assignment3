@@ -1,0 +1,26 @@
+Game 3011 Assignment 3 Design Document
+Match 3 Game
+
+Theme: The theme of this match 3 game is around using items to defeat monsters. You choose from one
+of three heroes (all to which are identical besides how they look). When you match 3 you will attack
+the enemy dealing damage based off of how many you match. I've chosen making this match 3 game to
+work as a mini battle system to an RPG type of game.
+
+System: Based off the example given in class on "how to build a match 3" I used a lot of it's ideas
+when creating the game. The system uses the game object's sprite to determine matches and switching.
+For example switching a sword with an adjacent tile will actually just swap the sprites of both render
+items. The fall down effect simply finds the empty tiles after a match and does the same kind of
+swap with the empty and above tiles however all sprites above the empty one move and new sprites are
+spawned at the top. All sprites are the same value, there are no bonus points.
+
+Levels of difficulty: There are 3 levels of difficulty, always starting on easy when you play the game.
+Easy, or "1", only has matchable tiles on the starting board and drop tiles. It also has a skeleton
+for you to fight. Medium, or "2", also starts with only matchable tiles, however some unmatchable tiles 
+fall when you complete matches. It has a fearsome orc you must battle. Lastly hard or "3", starts 
+with some of those unmatchable tiles and more have a chance to fall during the game, with an orc warlock
+to fight. I feel a match 3 game shouldn't be about being fast so the time limit is a lengthy
+6 minutes for each difficulty, and because of the unmatchable tiles the number of turns you have increase
+with difficulty as well as needed points. You get 10 points per tile matched, match 3 = 30 points.
+
+Bonus/Interesting: The match 3 game is now a fighting minigame. Matching items deal damage to the enemy
+while taking turns deals damage to the player.

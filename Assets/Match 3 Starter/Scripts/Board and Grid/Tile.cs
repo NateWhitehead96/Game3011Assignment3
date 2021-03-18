@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour {
 	private Vector2[] adjacentDirections = new Vector2[] { Vector2.up, Vector2.down, Vector2.left, Vector2.right };
 
 	public bool matchFound = false;
+
+	
 	void Awake() {
 		render = GetComponent<SpriteRenderer>();
     }
@@ -129,7 +131,7 @@ public class Tile : MonoBehaviour {
                 }
                 matchingTiles[i].GetComponent<SpriteRenderer>().sprite = null;
 			}
-			BoardManager.Instance.score += (10 * matchingTiles.Count) + 10;
+			BoardManager.Instance.score -= (10 * matchingTiles.Count + 10);
 			matchFound = true;
 		}
 	}

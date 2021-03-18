@@ -16,17 +16,42 @@ public class BoardManager : MonoBehaviour
     public bool isShifting { get; set; }
 
     public int turnsLeft;
-    public int score;
+    public float score;
 
     public static int difficulty = 1; // Difficulty will determine # of block sprites. 1 meaning none. 2 meaning some will spawn after you starts clearing. 3 meaning some start and spawn during play
+
+    public GameObject projectile;
+    public Transform projTransform;
 
     // Start is called before the first frame update
     void Start()
     {
         Instance = GetComponent<BoardManager>();
-        turnsLeft = 15 * difficulty; // give player more turns based on difficulty
+        turnsLeft = 10 * difficulty + 10; // give player more turns based on difficulty
         Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
         CreateBoard(offset.x, offset.y);
+        score = FindObjectOfType<UIScript>().PointSlider.maxValue;
+    }
+
+    public void HideBoard()
+    {
+        for (int x = 0; x < xSize; x++)
+        {
+            for (int y = 0; y < ySize; y++)
+            {
+                grid[x, y].SetActive(false);
+            }
+        }
+    }
+    public void ShowBoard()
+    {
+        for (int x = 0; x < xSize; x++)
+        {
+            for (int y = 0; y < ySize; y++)
+            {
+                grid[x, y].SetActive(true);
+            }
+        }
     }
 
     private void CreateBoard(float offsetX, float offsetY)
@@ -87,6 +112,7 @@ public class BoardManager : MonoBehaviour
                 if(grid[x, y].GetComponent<SpriteRenderer>().sprite == null)
                 {
                     print("some empty tiles");
+                    Instantiate(projectile, projTransform);
                     yield return StartCoroutine(ShiftTilesDown(x, y));
                     
                     break;
@@ -161,6 +187,12 @@ public class BoardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!Manager.InGame)
+        {
+            // hide all the tiles and junk
+            gameObject.SetActive(false);
+        }
+        else
+            gameObject.SetActive(true);
     }
 }

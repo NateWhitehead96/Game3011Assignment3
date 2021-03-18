@@ -18,11 +18,13 @@ public class UIScript : MonoBehaviour
     private float seconds;
 
     private bool GameOver;
+    
 
     public Slider PointSlider;
-    private void Start()
+    public Slider TurnsLeftSlider;
+    private void Awake()
     {
-        if(BoardManager.difficulty == 1)
+        if (BoardManager.difficulty == 1)
         {
             PointSlider.maxValue = 500;
         }
@@ -35,29 +37,39 @@ public class UIScript : MonoBehaviour
             PointSlider.maxValue = 700;
         }
         PointSlider.minValue = 0;
+    }
+    private void Start()
+    {
+        
+        TurnsLeftSlider.maxValue = BoardManager.Instance.turnsLeft;
         minutes = 6;
         seconds = 0;
         EndText.gameObject.SetActive(false);
         RestartButton.gameObject.SetActive(false);
         GameOver = false;
+        if(!Manager.InGame)
+        {
+            gameObject.SetActive(false);
+        }
     }
     // Update is called once per frame
     void Update()
     {
-        TurnsLeft.text = "Turns left: " + BoardManager.Instance.turnsLeft.ToString();
+        TurnsLeft.text = BoardManager.Instance.turnsLeft.ToString();
         Score.text = "Score: " + BoardManager.Instance.score.ToString();
         Timer.text = "Time: " + minutes.ToString() + ":" + seconds.ToString("#00");
         Difficulty.text = "Difficulty: " + BoardManager.difficulty.ToString();
-        PointsNeeded.text = PointSlider.maxValue.ToString();
+        PointsNeeded.text = PointSlider.value.ToString();
 
         PointSlider.value = BoardManager.Instance.score;
+        TurnsLeftSlider.value = BoardManager.Instance.turnsLeft;
 
         if (seconds <= 0)
         {
             minutes -= 1;
             seconds = 60;
         }
-        if (GameOver == false)
+        if (GameOver == false && Manager.InGame == true)
         {
             seconds -= Time.deltaTime;
         }
@@ -73,13 +85,13 @@ public class UIScript : MonoBehaviour
             GameOverFunc();
             EndText.text = "You're out of turns! Your final score is " + BoardManager.Instance.score.ToString();
         }
-        if(PointSlider.value >= PointSlider.maxValue)
+        if (PointSlider.value <= 0)
         {
             GameOver = true;
             GameOverFunc();
-            EndText.text = "You collected enough items! You can now continue!";
+            EndText.text = "You slain the enemy! You can now continue!";
         }
-        
+
     }
 
     public void GameOverFunc()
@@ -94,6 +106,7 @@ public class UIScript : MonoBehaviour
     public void OnRestart()
     {
         BoardManager.difficulty = Random.Range(1, 4);
+        //BoardManager.Instance.Running = true;
         //BoardManager.Instance.turnsLeft = BoardManager.difficulty * 20;
         SceneManager.LoadScene("Game");
         //minutes = 2;
