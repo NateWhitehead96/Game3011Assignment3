@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/* Some of this code was taken from https://www.raywenderlich.com/673-how-to-make-a-match-3-game-in-unity#toc-anchor-001 as a starting point
+ * for this project. The code was given as an example and I've built upon it.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,7 +31,7 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         Instance = GetComponent<BoardManager>();
-        turnsLeft = 10 * difficulty + 10; // give player more turns based on difficulty
+        turnsLeft = 10 * difficulty + 10; // give player more turns based on difficulty (also counts as player health)
         Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
         CreateBoard(offset.x, offset.y);
         score = FindObjectOfType<UIScript>().PointSlider.maxValue;
@@ -77,7 +81,7 @@ public class BoardManager : MonoBehaviour
                 possibleItems.Remove(previousLeft[y]);
                 possibleItems.Remove(previousBelow);
 
-                if(difficulty < 3)
+                if(difficulty < 3) // check to see if we're in hard, if not then dont spawn board with block tiles
                 {
                     Sprite newSprite = possibleItems[Random.Range(0, possibleItems.Count - 1)];
                     newTile.GetComponent<SpriteRenderer>().sprite = newSprite;

@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿/* Some of this code was taken from https://www.raywenderlich.com/673-how-to-make-a-match-3-game-in-unity#toc-anchor-001 as a starting point
+ * for this project. The code was given as an example and I've built upon it.
+ */
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 

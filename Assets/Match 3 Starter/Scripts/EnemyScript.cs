@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour
     public Sprite[] enemies;
     private SpriteRenderer render;
     // Start is called before the first frame update
-    void Start()
+    void Start() // depending on difficulty spawn a different enemy
     {
         render = GetComponent<SpriteRenderer>();
         if(BoardManager.difficulty == 1)
@@ -22,11 +22,5 @@ public class EnemyScript : MonoBehaviour
         {
             render.sprite = enemies[2];
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
